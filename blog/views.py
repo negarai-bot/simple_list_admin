@@ -33,3 +33,12 @@ def post_created_view(request):
     # else:
     #     print('Get request')
     # return render(request, 'blog/post_created.html')
+
+
+def post_update_views(request, pk):
+    post = get_object_or_404(Postblog, pk=pk)
+    form = NewPostForm(request.POST or None,instance=post) #save the past data and now you can edit
+
+    if form.is_valid():
+        form.save()
+    return render(request, 'blog/post_created.html', {'form': form})
