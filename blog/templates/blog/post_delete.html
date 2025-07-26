@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    delete
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="card shadow my-3 p-5">
+            <h1>Are yiu sure?</h1>
+            <p>Are you sure to deleted {{ post.title }} pos preeminently</p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="yes,Delete">
+            </form>
+    
+        </div>
+    </div>
+{% endblock %}

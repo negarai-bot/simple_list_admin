@@ -1,3 +1,4 @@
+from django.shortcuts import reverse
 from django.db import models
 
 class Postblog(models.Model):
@@ -15,3 +16,6 @@ class Postblog(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post_dtail', args=[self.id])  #/blog/<int>/
