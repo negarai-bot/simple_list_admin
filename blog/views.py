@@ -6,10 +6,6 @@ from django.views import generic
 from .models import Postblog
 from django.urls import reverse_lazy
 
-# def Post_list_view(request):
-#     #post_list = Postblog.objects.all()
-#     post_list =Postblog.objects.filter(status='pub').order_by('-datetime_modified')
-#     return render(request, 'blog/post_list.html', {'post_list':post_list})
 
 class PostListView(generic.ListView):
     # model = Postblog
@@ -18,17 +14,44 @@ class PostListView(generic.ListView):
 
     def get_queryset(self):
         return Postblog.objects.filter(status='pub').order_by('-datetime_modified')
+class PostDetailView(generic.DetailView):
+    model = Postblog
+    template_name = 'blog/post_dtail.html'
+    context_object_name = 'post'
+
+class PostCreatedView(generic.CreateView):
+    form_class = NewPostForm
+    template_name = 'blog/post_created.html'
+
+class PostUpdateView(generic.UpdateView):
+        model = Postblog
+        form_class = NewPostForm
+        template_name = 'blog/post_created.html'
+
+class Postdeleteview(generic.DeleteView):
+    model = Postblog
+    template_name = 'blog/post_delete.html'
+    success_url = reverse_lazy('posts_list')
+
+    # if request.method == 'POST':
+    #     post_title = request.POST.get('title')
+    #     post_text = request.POST.get('text')
+    #     user = User.object.all()[0]
+    #     POST.objects.created(title=post_title, text=post_text, author=user, status='pub')
+    # else:
+    #     print('Get request')
+    # return render(request, 'blog/post_created.html')
 
 
+# def Post_list_view(request):
+#     #post_list = Postblog.objects.all()
+#     post_list =Postblog.objects.filter(status='pub').order_by('-datetime_modified')
+#     return render(request, 'blog/post_list.html', {'post_list':post_list})
 #
 # def post_detail_view(request, pk):
 #     #post = Postblog.objects.get(pk=pk)
 #     post =get_object_or_404(Postblog, pk=pk)
 #     return render(request, 'blog/post_dtail.html', {'post': post})
-class PostDetailView(generic.DetailView):
-    model = Postblog
-    template_name = 'blog/post_dtail.html'
-    context_object_name = 'post'
 
 
 # def post_created_view(request):
@@ -42,19 +65,6 @@ class PostDetailView(generic.DetailView):
 #         form = NewPostForm()
 #     return render(request, 'blog/post_created.html', context={'form': form})
 
-class PostCreatedView(generic.CreateView):
-    form_class = NewPostForm
-    template_name = 'blog/post_created.html'
-
-    # if request.method == 'POST':
-    #     post_title = request.POST.get('title')
-    #     post_text = request.POST.get('text')
-    #     user = User.object.all()[0]
-    #     POST.objects.created(title=post_title, text=post_text, author=user, status='pub')
-    # else:
-    #     print('Get request')
-    # return render(request, 'blog/post_created.html')
-
 
 # def post_update_views(request, pk):
 #     post = get_object_or_404(Postblog, pk=pk)
@@ -64,11 +74,6 @@ class PostCreatedView(generic.CreateView):
 #         form.save()
 #     return render(request, 'blog/post_created.html', {'form': form})
 
-class PostUpdateView(generic.UpdateView):
-    model = Postblog
-    form_class = NewPostForm
-    template_name = 'blog/post_created.html'
-
 # def post_delete_views(request, pk):
 #     post = get_object_or_404(Postblog, pk=pk)
 #     if request.method == 'POST':
@@ -77,7 +82,3 @@ class PostUpdateView(generic.UpdateView):
 #
 #     return render(request, 'blog/post_delete.html', {'post': post})
 
-class Postdeleteview(generic.DeleteView):
-    model = Postblog
-    template_name = 'blog/post_delete.html'
-    success_url = reverse_lazy('posts_list')

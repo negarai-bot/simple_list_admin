@@ -28,7 +28,17 @@
 
             </div>
         </div>
-        <div class="mx-2 text-white">Welcome</div>
+        <div class="mx-2 text-white">
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method='post' >
+                    {% csrf_token %}
+{#                    <a class="text_light" href="{% url 'logout' %}">Logout</a>#}
+                    Welcome {{ user.username }}|<button type="submit" href="{% url 'logout' %}">Logout</button>
+                </form>
+            {% else %}
+                     <a class="text-light" href="{% url 'login' %}">Login</a>|<a class="text-light" href="{% url 'signup' %}">sign up</a>
+            {% endif %}
+        </div>
     </div>
 </nav>
 
